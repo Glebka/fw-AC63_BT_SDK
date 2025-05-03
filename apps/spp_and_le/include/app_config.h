@@ -17,29 +17,29 @@
 #define CONFIG_DEBUG_ENABLE
 
 #define TCFG_MEDIA_LIB_USE_MALLOC		    1
-//apps example 选择,只能选1个,要配置对应的board_config.h
-#define CONFIG_APP_SPP_LE                 1 //SPP + LE or LE's client
+// Apps example selection. Only one option can be selected, and the corresponding board_config.h must be configured.
+#define CONFIG_APP_SPP_LE                 0 //SPP + LE or LE's client
 #define CONFIG_APP_FTMS                   0 //FTMS
-#define CONFIG_APP_FINDMY                 0 //FINDMY
-#define CONFIG_APP_MULTI                  0 //蓝牙LE多连 + spp
-#define CONFIG_APP_DONGLE                 0 //usb + 蓝牙(ble 主机),PC hid设备
-#define CONFIG_APP_CENTRAL                0 //ble client,中心设备
-#define CONFIG_APP_LL_SYNC                0 //腾讯连连
-#define CONFIG_APP_BEACON                 0 //蓝牙BLE ibeacon
-#define CONFIG_APP_NONCONN_24G            0 //2.4G 非连接收发
-#define CONFIG_APP_TUYA                   0 //涂鸦协议
-#define CONFIG_APP_AT_COM                 0 //AT com HEX格式命令
-#define CONFIG_APP_AT_CHAR_COM            0 //AT com 字符串格式命令
-#define CONFIG_APP_IDLE                   0 //空闲任务
-#define CONFIG_APP_CONN_24G               0 //基于BLE的2.4g,板级只需要开BLE
-#define CONFIG_APP_HILINK                 0 //华为协议
-#define CONFIG_APP_ELECTROCAR             0 //电车项目,注意将板级处ADKEY以及别的IO占用失能, 关闭低功耗:TCFG_LOWPOWER_LOWPOWER_SEL设置为0
+#define CONFIG_APP_FINDMY                 1 //FINDMY
+#define CONFIG_APP_MULTI                  0 // BLE multi-connection + SPP
+#define CONFIG_APP_DONGLE                 0 // USB + Bluetooth (BLE host), PC HID device
+#define CONFIG_APP_CENTRAL                0 // BLE client, central device
+#define CONFIG_APP_LL_SYNC                0 // Tencent Lianlian
+#define CONFIG_APP_BEACON                 0 // Bluetooth BLE iBeacon
+#define CONFIG_APP_NONCONN_24G            0 // 2.4G non-connected transceiver
+#define CONFIG_APP_TUYA                   0 // Tuya Protocol
+#define CONFIG_APP_AT_COM                 0 // AT com HEX format command
+#define CONFIG_APP_AT_CHAR_COM            0 // AT com string format command
+#define CONFIG_APP_IDLE                   0 // Idle task
+#define CONFIG_APP_CONN_24G               0 // BLE-based 2.4G, board-level only requires BLE enabled
+#define CONFIG_APP_HILINK                 0 // Huawei Protocol
+#define CONFIG_APP_ELECTROCAR             0 // Electric vehicle project; note to disable board-level ADKEY and other IO occupations, disable low power: set TCFG_LOWPOWER_LOWPOWER_SEL to 0
 // #define LL_SYNC_EN                        CONFIG_APP_LL_SYNC //
 // #define TUYA_DEMO_EN                      CONFIG_APP_TUYA
 
 //edr sniff config
 #define SNIFF_MODE_RESET_ANCHOR           0
-//V5.0 扩展广播/扫描使能
+//V5.0 Extended Advertising/Scanning Enable
 #define CONFIG_BT_EXT_ADV_MODE            0
 
 #define CONFIG_SET_1M_PHY                 1 //for iot
@@ -48,170 +48,170 @@
 #define CONFIG_SET_CODED_S8_PHY           4
 #define CONFIG_BLE_PHY_SET                CONFIG_SET_1M_PHY //default
 
-//BLE做主机，使能是否支持搜索连接JL的测试盒
+// When BLE acts as a master, enable support for searching and connecting to JL test box
 #define SUPPORT_TEST_BOX_BLE_MASTER_TEST_EN	   0
 
 #if CONFIG_APP_SPP_LE
-//配置双模同名字，同地址
-#define DOUBLE_BT_SAME_NAME                0 //同名字
-#define DOUBLE_BT_SAME_MAC                 0 //同地址
-#define CONFIG_APP_SPP_LE_TO_IDLE          0 //SPP_AND_LE To IDLE Use
-#define CONFIG_BLE_HIGH_SPEED              0 //BLE提速模式: 使能DLE+2M, payload要匹配pdu的包长
+// Configure dual-mode with the same name and same address
+#define DOUBLE_BT_SAME_NAME                0 // Same name
+#define DOUBLE_BT_SAME_MAC                 0 // Same MAC
+#define CONFIG_APP_SPP_LE_TO_IDLE          0 // SPP_AND_LE to idle use
+#define CONFIG_BLE_HIGH_SPEED              0 // BLE high speed mode: enable DLE+2M, payload must match PDU packet length
 
-//蓝牙BLE配置
-#define CONFIG_BT_GATT_COMMON_ENABLE       1 //配置使用gatt公共模块
-#define CONFIG_BT_SM_SUPPORT_ENABLE        0 //配置是否支持加密
-#define CONFIG_BT_GATT_CLIENT_NUM          0 //配置主机client个数 (支持使能1,search profile)
-#define CONFIG_BT_GATT_SERVER_NUM          1 //配置从机server个数
-#define CONFIG_BT_GATT_CONNECTION_NUM      (CONFIG_BT_GATT_SERVER_NUM + CONFIG_BT_GATT_CLIENT_NUM) //配置连接个数
+// Bluetooth BLE configuration
+#define CONFIG_BT_GATT_COMMON_ENABLE       1 // Configure use of the common GATT module
+#define CONFIG_BT_SM_SUPPORT_ENABLE        0 // Configure whether encryption is supported
+#define CONFIG_BT_GATT_CLIENT_NUM          0 // Configure the number of client connections (supports enabling 1 for search profile)
+#define CONFIG_BT_GATT_SERVER_NUM          1 // Configure the number of server connections
+#define CONFIG_BT_GATT_CONNECTION_NUM      (CONFIG_BT_GATT_SERVER_NUM + CONFIG_BT_GATT_CLIENT_NUM) // Configure the total number of connections
 
-//BLE 从机扩展搜索对方服务功能,需要打开GATT CLIENT
+// BLE peripheral extended search for counterpart services; requires GATT CLIENT enabled
 #if CONFIG_BT_GATT_CLIENT_NUM
-#define TRANS_CLIENT_SEARCH_PROFILE_ENABLE  1/*配置模块搜索指定的服务*/
+#define TRANS_CLIENT_SEARCH_PROFILE_ENABLE  1 /* Configure module to search for specified services */
 
-#if !TRANS_CLIENT_SEARCH_PROFILE_ENABLE && CONFIG_BT_SM_SUPPORT_ENABLE /*定制搜索ANCS&AMS服务*/
-#define TRANS_ANCS_EN                       1/*配置搜索主机的ANCS 服务,要开配对绑定*/
-#define TRANS_AMS_EN                        0/*配置搜索主机的ANCS 服务,要开配对绑定*/
+#if !TRANS_CLIENT_SEARCH_PROFILE_ENABLE && CONFIG_BT_SM_SUPPORT_ENABLE /* Custom search for ANCS & AMS services */
+#define TRANS_ANCS_EN                       1 /* Configure to search for the host's ANCS service, pairing required */
+#define TRANS_AMS_EN                        0 /* Configure to search for the host's AMS service, pairing required */
 #endif
-#endif//#if CONFIG_BT_GATT_CLIENT_NUM
+#endif //#if CONFIG_BT_GATT_CLIENT_NUM
 
 #elif CONFIG_APP_DONGLE
-/*默认做搜索设备匹配名字再发起连接 inquery + page*/
-#define EDR_EMITTER_EN                     0 //蓝牙(edr主机)
+/* Default: search for devices by matching names before initiating connection (inquiry + page) */
+#define EDR_EMITTER_EN                     0 // Bluetooth (EDR host)
 
 #if EDR_EMITTER_EN
-/*不做搜索匹配 + 连接，只开放可连接，等待对方连接*/
-#define EDR_EMITTER_PAGESCAN_ONLY          0 /**/
+/* Do not perform search matching + connection; just enable connectable mode and wait for the other side to connect */
+#define EDR_EMITTER_PAGESCAN_ONLY          0 /* */
 #endif
 
 #define CONFIG_BT_GATT_COMMON_ENABLE       1
-#define CONFIG_BT_SM_SUPPORT_ENABLE        1 //配置是否支持加密
-#define CONFIG_BT_GATT_CLIENT_NUM          1 //设置主机个数1~2,(dongle可连接蓝牙BLE设备的个数,=2时会多注册1个usb设备)
+#define CONFIG_BT_SM_SUPPORT_ENABLE        1 // Configure whether to support encryption
+#define CONFIG_BT_GATT_CLIENT_NUM          1 // Set number of hosts: 1~2 (number of Bluetooth BLE devices the dongle can connect; if =2, one extra USB device will be registered)
 #define CONFIG_BT_COMPOSITE_EQUIPMENT      0
-#define CONFIG_BT_GATT_SERVER_NUM          0 //
-#define CONFIG_BT_GATT_CONNECTION_NUM      (CONFIG_BT_GATT_SERVER_NUM + CONFIG_BT_GATT_CLIENT_NUM) //
-#define CONFIG_BLE_HIGH_SPEED              0 //BLE提速模式: 使能DLE+2M, payload要匹配pdu的包长
+#define CONFIG_BT_GATT_SERVER_NUM          0 /* */
+#define CONFIG_BT_GATT_CONNECTION_NUM      (CONFIG_BT_GATT_SERVER_NUM + CONFIG_BT_GATT_CLIENT_NUM) /* */
+#define CONFIG_BLE_HIGH_SPEED              0 // BLE high-speed mode: enable DLE+2M, payload must match PDU packet length
 
 #elif CONFIG_APP_CENTRAL
 #define CONFIG_BT_GATT_COMMON_ENABLE       1
-#define CONFIG_BT_SM_SUPPORT_ENABLE        0 //配置是否支持加密
-#define CONFIG_BT_GATT_CLIENT_NUM          1 //
-#define CONFIG_BT_GATT_SERVER_NUM          0 //(使能1,在主机链路上,提供服务service给对方搜索，以及操作,不创建新的连接)
-#define CONFIG_BT_GATT_CONNECTION_NUM      (CONFIG_BT_GATT_SERVER_NUM + CONFIG_BT_GATT_CLIENT_NUM) //
-#define CONFIG_BLE_HIGH_SPEED              0 //BLE提速模式: 使能DLE+2M, payload要匹配pdu的包长
+#define CONFIG_BT_SM_SUPPORT_ENABLE        0 // Configure whether to support encryption
+#define CONFIG_BT_GATT_CLIENT_NUM          1 /* */
+#define CONFIG_BT_GATT_SERVER_NUM          0 /* (If enabled, on the master link, provides a service for the other side to search and operate, without creating a new connection) */
+#define CONFIG_BT_GATT_CONNECTION_NUM      (CONFIG_BT_GATT_SERVER_NUM + CONFIG_BT_GATT_CLIENT_NUM) /* */
+#define CONFIG_BLE_HIGH_SPEED              0 // BLE high-speed mode: enable DLE+2M, payload must match PDU packet length
 
 #elif CONFIG_APP_MULTI
 #define CONFIG_BT_GATT_COMMON_ENABLE       1
 #define CONFIG_BT_SM_SUPPORT_ENABLE        0
 #define CONFIG_BT_GATT_CLIENT_NUM          1 //range(0~7)
 #define CONFIG_BT_GATT_SERVER_NUM          0 //range(0~1)
-#define CONFIG_BT_GATT_CONNECTION_NUM      (CONFIG_BT_GATT_SERVER_NUM + CONFIG_BT_GATT_CLIENT_NUM) //range(0~8)
-#define CONFIG_BLE_HIGH_SPEED              0 //BLE提速模式: 使能DLE+2M, payload要匹配pdu的包长
+#define CONFIG_BT_GATT_CONNECTION_NUM      (CONFIG_BT_GATT_SERVER_NUM + CONFIG_BT_GATT_CLIENT_NUM) // range (0~8)
+#define CONFIG_BLE_HIGH_SPEED              0 // BLE high-speed mode: enable DLE+2M, payload must match PDU packet length
 
 #elif CONFIG_APP_AT_COM
-//选择AT: 主机从机二选一
-#define TRANS_AT_COM                       1 //串口控制对接蓝牙双模透传
-#define TRANS_AT_CLIENT                    0 //串口控制对接蓝牙BLE主机透传
+// Select AT: choose either master or slave
+#define TRANS_AT_COM                       1 // Serial control for Bluetooth dual-mode transparent transmission
+#define TRANS_AT_CLIENT                    0 // Serial control for Bluetooth BLE master transparent transmission
 
-#define CONFIG_BT_GATT_COMMON_ENABLE       0//(apps not support,应用不支持使能)
-#define CONFIG_BT_SM_SUPPORT_ENABLE        0//(apps not support,应用不支持使能)
-#define CONFIG_BT_GATT_CLIENT_NUM          1//max is 1
-#define CONFIG_BT_GATT_SERVER_NUM          1//max is 1
+#define CONFIG_BT_GATT_COMMON_ENABLE       0 // (apps not supported, application does not support)
+#define CONFIG_BT_SM_SUPPORT_ENABLE        0 // (apps not supported, application does not support)
+#define CONFIG_BT_GATT_CLIENT_NUM          1 // max is 1
+#define CONFIG_BT_GATT_SERVER_NUM          1 // max is 1
 #define CONFIG_BT_GATT_CONNECTION_NUM      (CONFIG_BT_GATT_SERVER_NUM + CONFIG_BT_GATT_CLIENT_NUM)
 
 #elif CONFIG_APP_AT_CHAR_COM
-#define CONFIG_BT_GATT_COMMON_ENABLE       0//(apps not support,应用不支持使能)
-#define CONFIG_BT_SM_SUPPORT_ENABLE        0//(apps not support,应用不支持使能)
-#define CONFIG_BT_GATT_CLIENT_NUM          1//max is 1
-#define CONFIG_BT_GATT_SERVER_NUM          1//max is 1
+#define CONFIG_BT_GATT_COMMON_ENABLE       0 // (apps not supported, application does not support)
+#define CONFIG_BT_SM_SUPPORT_ENABLE        0 // (apps not supported, application does not support)
+#define CONFIG_BT_GATT_CLIENT_NUM          1 // max is 1
+#define CONFIG_BT_GATT_SERVER_NUM          1 // max is 1
 #define CONFIG_BT_GATT_CONNECTION_NUM      (CONFIG_BT_GATT_SERVER_NUM + CONFIG_BT_GATT_CLIENT_NUM)
 
 #elif CONFIG_APP_TUYA
-//配置双模同名字，同地址
-#define DOUBLE_BT_SAME_NAME                0 //同名字
+// Configure dual-mode with the same name and same address
+#define DOUBLE_BT_SAME_NAME                0 // same name
 
-//蓝牙配置
-#define CONFIG_BT_GATT_COMMON_ENABLE       1 //配置使用gatt公共模块
-#define CONFIG_BT_SM_SUPPORT_ENABLE        0 //配置是否支持加密
-#define CONFIG_BT_GATT_CLIENT_NUM          0 //配置主机client个数(app not support,应用不支持使能)
-#define CONFIG_BT_GATT_SERVER_NUM          1 //配置从机server个数,max is 1
-#define CONFIG_BT_GATT_CONNECTION_NUM      (CONFIG_BT_GATT_SERVER_NUM + CONFIG_BT_GATT_CLIENT_NUM) //配置连接个数
+// Bluetooth configuration
+#define CONFIG_BT_GATT_COMMON_ENABLE       1 // Use the GATT common module
+#define CONFIG_BT_SM_SUPPORT_ENABLE        0 // Configure whether encryption is supported
+#define CONFIG_BT_GATT_CLIENT_NUM          0 // Configure number of master clients (apps do not support)
+#define CONFIG_BT_GATT_SERVER_NUM          1 // Configure number of slave servers, max is 1
+#define CONFIG_BT_GATT_CONNECTION_NUM      (CONFIG_BT_GATT_SERVER_NUM + CONFIG_BT_GATT_CLIENT_NUM) // Configure number of connections
 
 #elif CONFIG_APP_LL_SYNC
-//配置双模同名字，同地址
-#define DOUBLE_BT_SAME_NAME                0 //同名字
+// Configure dual-mode with the same name and same address
+#define DOUBLE_BT_SAME_NAME                0 // same name
 
-//蓝牙配置
-#define CONFIG_BT_GATT_COMMON_ENABLE       1 //配置使用gatt公共模块
-#define CONFIG_BT_SM_SUPPORT_ENABLE        0 //配置是否支持加密
-#define CONFIG_BT_GATT_CLIENT_NUM          0 //配置主机client个数(app not support,应用不支持使能)
-#define CONFIG_BT_GATT_SERVER_NUM          1 //配置从机server个数,max is 1
-#define CONFIG_BT_GATT_CONNECTION_NUM      (CONFIG_BT_GATT_SERVER_NUM + CONFIG_BT_GATT_CLIENT_NUM) //配置连接个数
+// Bluetooth configuration
+#define CONFIG_BT_GATT_COMMON_ENABLE       1 // Use common GATT module
+#define CONFIG_BT_SM_SUPPORT_ENABLE        0 // Enable encryption support
+#define CONFIG_BT_GATT_CLIENT_NUM          0 // Number of host client connections (app does not support enabling)
+#define CONFIG_BT_GATT_SERVER_NUM          1 // Number of slave server connections (max is 1)
+#define CONFIG_BT_GATT_CONNECTION_NUM      (CONFIG_BT_GATT_SERVER_NUM + CONFIG_BT_GATT_CLIENT_NUM) // Total number of connections
 
 #elif CONFIG_APP_CONN_24G
 
-#define CONFIG_BT_GATT_COMMON_ENABLE       1 //配置使用gatt公共模块
-#define CONFIG_BT_SM_SUPPORT_ENABLE        0 //(apps not support,应用不支持使能)
-#define CONFIG_BT_GATT_CLIENT_NUM          0 //配置主机client使能,max is 1
-#define CONFIG_BT_GATT_SERVER_NUM          1 //配置从机server使能,max is 1
-//2.4G模式: 0---ble, 非0---2.4G配对码; !!!主从欲连接,需保持配对码一致
-//!!!初始化之后任意非连接时刻修改配对码API:rf_set_conn_24g_coded
-#define CFG_RF_24G_CODE_ID_SCAN            (0x5555AAAA) //<=24bits 主机扫描2.4G配对码
-#define CFG_RF_24G_CODE_ID_ADV             (0x5555AAAA) //<=24bits 从机广播2.4G配对码
+#define CONFIG_BT_GATT_COMMON_ENABLE       1 // Use common GATT module
+#define CONFIG_BT_SM_SUPPORT_ENABLE        0 // (Not supported by the app)
+#define CONFIG_BT_GATT_CLIENT_NUM          0 // Enable host client connections (max is 1)
+#define CONFIG_BT_GATT_SERVER_NUM          1 // Enable slave server connections (max is 1)
+// 2.4G mode: 0---BLE, non-0---2.4G pairing code; !!! For master-slave connection, pairing codes must match
+// !!! After initialization, pairing code can be modified via API rf_set_conn_24g_coded when not connected
+#define CFG_RF_24G_CODE_ID_SCAN            (0x5555AAAA) // <=24bits, pairing code for host scanning in 2.4G mode
+#define CFG_RF_24G_CODE_ID_ADV             (0x5555AAAA) // <=24bits, pairing code for slave advertising in 2.4G mode
 #define CONFIG_BT_GATT_CONNECTION_NUM      (CONFIG_BT_GATT_SERVER_NUM + CONFIG_BT_GATT_CLIENT_NUM)
-#define CONFIG_BLE_HIGH_SPEED              0 //BLE提速模式: 使能DLE+2M, payload要匹配pdu的包长
+#define CONFIG_BLE_HIGH_SPEED              0 // BLE high-speed mode: enable DLE+2M, payload must match PDU packet length
 #undef  CONFIG_BLE_PHY_SET
-#define CONFIG_BLE_PHY_SET                 4 //PHY SEL 1--1M, 2--2M, 3--CODED_S2, 4--CODED_S8
+#define CONFIG_BLE_PHY_SET                 4 // PHY selection: 1--1M, 2--2M, 3--CODED_S2, 4--CODED_S8
 #if CONFIG_BLE_HIGH_SPEED
 #undef CONFIG_BLE_PHY_SET
-#define CONFIG_BLE_PHY_SET                 2 //SET 2M_PHY for protect
+#define CONFIG_BLE_PHY_SET                 2 // Set 2M PHY for protection
 #endif
 
 #elif CONFIG_APP_HILINK
-//配置双模同名字，同地址
-#define DOUBLE_BT_SAME_NAME                1 //同名字
-#define DOUBLE_BT_SAME_MAC                 0 //同地址
+// Configure dual-mode with the same name and same address
+#define DOUBLE_BT_SAME_NAME                1 // same name
+#define DOUBLE_BT_SAME_MAC                 0 // same address
 
-//蓝牙配置
-#define CONFIG_BT_GATT_COMMON_ENABLE       1 //配置使用gatt公共模块
-#define CONFIG_BT_SM_SUPPORT_ENABLE        1 //配置是否支持加密
-#define CONFIG_BT_GATT_CLIENT_NUM          0 //配置主机client个数(app not support,应用不支持使能)
-#define CONFIG_BT_GATT_SERVER_NUM          1 //配置从机server个数,max is 1
+// Bluetooth configuration
+#define CONFIG_BT_GATT_COMMON_ENABLE       1 // Use common GATT module
+#define CONFIG_BT_SM_SUPPORT_ENABLE        1 // Enable encryption support
+#define CONFIG_BT_GATT_CLIENT_NUM          0 // Number of host client connections (app does not support enabling)
+#define CONFIG_BT_GATT_SERVER_NUM          1 // Number of slave server connections (max is 1)
 #define CONFIG_BT_GATT_CONNECTION_NUM      (CONFIG_BT_GATT_SERVER_NUM + CONFIG_BT_GATT_CLIENT_NUM)
 
 #elif CONFIG_APP_FINDMY
-#define CONFIG_BLE_HIGH_SPEED              1 //BLE提速模式: 使能DLE+2M, payload要匹配pdu的包长
+#define CONFIG_BLE_HIGH_SPEED              1 // BLE high-speed mode: enable DLE+2M, payload must match PDU packet length
 
-//蓝牙BLE配置
-#define CONFIG_BT_GATT_COMMON_ENABLE       1 //配置使用gatt公共模块
-#define CONFIG_BT_SM_SUPPORT_ENABLE        1 //配置是否支持加密
-#define CONFIG_BT_GATT_CLIENT_NUM          0 //配置主机client个数 (app not support,应用不支持使能)
-#define CONFIG_BT_GATT_SERVER_NUM          2 //配置从机server个数
-#define CONFIG_BT_GATT_CONNECTION_NUM      (CONFIG_BT_GATT_SERVER_NUM + CONFIG_BT_GATT_CLIENT_NUM) //配置连接个数
+// Bluetooth BLE configuration
+#define CONFIG_BT_GATT_COMMON_ENABLE       1 // Use common GATT module
+#define CONFIG_BT_SM_SUPPORT_ENABLE        1 // Enable encryption support
+#define CONFIG_BT_GATT_CLIENT_NUM          0 // Number of host client connections (app does not support enabling)
+#define CONFIG_BT_GATT_SERVER_NUM          2 // Number of slave server connections
+#define CONFIG_BT_GATT_CONNECTION_NUM      (CONFIG_BT_GATT_SERVER_NUM + CONFIG_BT_GATT_CLIENT_NUM) // Total number of connections
 
-//debug for sensor's data to uart
+// Debug: output sensor data to UART
 #define FMY_DEBUG_SENSOR_TO_UART_ENBALE    0
-//debug for test sensor is moving
+// Debug: test sensor movement detection
 #define FMY_DEBUG_TEST_MOTION_DETETION     0
-//认证测试模式
+// Authentication test mode
 #define FMY_FMCA_TEST_MODE                 0
-//支持pair状态,按键进入或退出测试盒连接模式
+// Support pair status: enter or exit test box connection mode via button
 #define FMY_SUPPORT_TEST_BOX_MODE          0
 
 #elif CONFIG_APP_FTMS
 
-//配置双模同名字，同地址
-#define DOUBLE_BT_SAME_NAME                0 //同名字
-#define DOUBLE_BT_SAME_MAC                 0 //同地址
-#define CONFIG_APP_SPP_LE_TO_IDLE          0 //SPP_AND_LE To IDLE Use
-#define CONFIG_BLE_HIGH_SPEED              0 //BLE提速模式: 使能DLE+2M, payload要匹配pdu的包长
+// Configure dual-mode with the same name and same address
+#define DOUBLE_BT_SAME_NAME                0 // same name
+#define DOUBLE_BT_SAME_MAC                 0 // same address
+#define CONFIG_APP_SPP_LE_TO_IDLE          0 // SPP_AND_LE to idle use
+#define CONFIG_BLE_HIGH_SPEED              0 // BLE high-speed mode: enable DLE+2M, payload must match PDU packet length
 
-//蓝牙BLE配置
-#define CONFIG_BT_GATT_COMMON_ENABLE       1 //配置使用gatt公共模块
-#define CONFIG_BT_SM_SUPPORT_ENABLE        0 //配置是否支持加密
-#define CONFIG_BT_GATT_CLIENT_NUM          0 //配置主机client个数 (支持使能1,search profile)
-#define CONFIG_BT_GATT_SERVER_NUM          1 //配置从机server个数
-#define CONFIG_BT_GATT_CONNECTION_NUM      (CONFIG_BT_GATT_SERVER_NUM + CONFIG_BT_GATT_CLIENT_NUM) //配置连接个数
+// Bluetooth BLE configuration
+#define CONFIG_BT_GATT_COMMON_ENABLE       1 // Use common GATT module
+#define CONFIG_BT_SM_SUPPORT_ENABLE        0 // Enable encryption support
+#define CONFIG_BT_GATT_CLIENT_NUM          0 // Number of host client connections (support enabling 1 for search profile)
+#define CONFIG_BT_GATT_SERVER_NUM          1 // Number of slave server connections
+#define CONFIG_BT_GATT_CONNECTION_NUM      (CONFIG_BT_GATT_SERVER_NUM + CONFIG_BT_GATT_CLIENT_NUM) // Total number of connections
 
 #else
 #define CONFIG_BT_GATT_COMMON_ENABLE       0
@@ -223,26 +223,26 @@
 #endif
 
 #if CONFIG_APP_ELECTROCAR
-//暂时只有bd19(AC632N)支持433/nrf/一键通
-//                                          433 配置                                 //
+// Currently, only bd19 (AC632N) supports 433/nrf/One-Key operations
+//                                          433 Configuration                                 //
 #define TCFG_433_ENABLE                     DISABLE_THIS_MOUDLE
 #define TCFG_433_PORT                       IO_PORTB_00
-#define TCFG_433_IO_TEST                    ENABLE_THIS_MOUDLE//通过IO捕获433输入数据
-//                                          nrf 配置                                 //
+#define TCFG_433_IO_TEST                    ENABLE_THIS_MOUDLE // Capture 433 input data via IO
+//                                          nrf Configuration                                 //
 #define TCFG_NFC_ENABLE                     DISABLE_THIS_MOUDLE
 #define TCFG_NFC_PORT                       IO_PORTB_01
-#define TCFG_NFC_IO_TEST                    ENABLE_THIS_MOUDLE//通过IO捕获433输入数据
-//                                          一键通 配置                              //
+#define TCFG_NFC_IO_TEST                    ENABLE_THIS_MOUDLE // Capture 433 input data via IO
+//                                          One-Key Configuration                              //
 #define TCFG_ONE_PARSE_ENABLE               DISABLE_THIS_MOUDLE
 #define TCFG_ONE_PARSE_PORT                 IO_PORTB_03
-#define TCFG_ONE_PARSE_IO_TEST              ENABLE_THIS_MOUDLE//通过IO捕获433输入数据
+#define TCFG_ONE_PARSE_IO_TEST              ENABLE_THIS_MOUDLE // Capture 433 input data via IO
 
-//蓝牙BLE配置
-#define CONFIG_BT_GATT_COMMON_ENABLE       1 //配置使用gatt公共模块
-#define CONFIG_BT_SM_SUPPORT_ENABLE        0 //配置是否支持加密
-#define CONFIG_BT_GATT_CLIENT_NUM          0 //配置主机client个数 (app not support,应用不支持使能)
-#define CONFIG_BT_GATT_SERVER_NUM          1 //配置从机server个数
-#define CONFIG_BT_GATT_CONNECTION_NUM      (CONFIG_BT_GATT_SERVER_NUM + CONFIG_BT_GATT_CLIENT_NUM) //配置连接个数
+// Bluetooth BLE configuration
+#define CONFIG_BT_GATT_COMMON_ENABLE       1 // Use the common GATT module
+#define CONFIG_BT_SM_SUPPORT_ENABLE        0 // Configure whether encryption is supported
+#define CONFIG_BT_GATT_CLIENT_NUM          0 // Configure number of host client connections (app not supported)
+#define CONFIG_BT_GATT_SERVER_NUM          1 // Configure number of slave server connections
+#define CONFIG_BT_GATT_CONNECTION_NUM      (CONFIG_BT_GATT_SERVER_NUM + CONFIG_BT_GATT_CLIENT_NUM) // Configure total number of connections
 
 #endif
 
@@ -277,7 +277,7 @@
 #define TCFG_LOWPOWER_LOWPOWER_SEL                0
 
 #if TCFG_USER_EDR_ENABLE && TCFG_USER_BLE_ENABLE
-//不支持同时打开
+// Simultaneous activation is not supported
 #error "dut need disable one bt!!!"
 #endif
 
@@ -289,10 +289,10 @@
 #define TCFG_BD_NUM						          1
 
 #undef  TCFG_USER_TWS_ENABLE
-#define TCFG_USER_TWS_ENABLE                      0     //tws功能使能
+#define TCFG_USER_TWS_ENABLE                      0     // Enable TWS functionality
 
 #undef  TCFG_USER_BLE_ENABLE
-#define TCFG_USER_BLE_ENABLE                      1     //BLE功能使能
+#define TCFG_USER_BLE_ENABLE                      1     // Enable BLE functionality
 
 #undef  TCFG_AUTO_SHUT_DOWN_TIME
 #define TCFG_AUTO_SHUT_DOWN_TIME		          0
@@ -335,7 +335,7 @@
 
 #define BT_FOR_APP_EN                     0
 
-//需要app(BLE)升级要开一下宏定义
+// To enable app (BLE) upgrade, you need to enable the following macro definition
 #if CONFIG_APP_OTA_ENABLE
 #define RCSP_BTMATE_EN                    1
 #define RCSP_UPDATE_EN                    1
@@ -352,8 +352,8 @@
 #define SDFILE_MOUNT_PATH     	"mnt/sdfile"
 
 #if (USE_SDFILE_NEW)
-#define SDFILE_APP_ROOT_PATH       	SDFILE_MOUNT_PATH"/app/"  //app分区
-#define SDFILE_RES_ROOT_PATH       	SDFILE_MOUNT_PATH"/res/"  //资源文件分区
+#define SDFILE_APP_ROOT_PATH        SDFILE_MOUNT_PATH"/app/"  // app partition
+#define SDFILE_RES_ROOT_PATH        SDFILE_MOUNT_PATH"/res/"  // resource file partition
 #else
 #define SDFILE_RES_ROOT_PATH       	SDFILE_MOUNT_PATH"/C/"
 #endif
@@ -380,7 +380,7 @@
 #endif
 #define BT_NORMAL_HZ	            CONFIG_BT_NORMAL_HZ
 //*********************************************************************************//
-//                                 时钟切换配置                                    //
+//                                 Clock Switching Configuration                                    //
 //*********************************************************************************//
 
 #define BT_NORMAL_HZ	            CONFIG_BT_NORMAL_HZ
@@ -398,42 +398,42 @@
 #define BT_CALL_16k_ADVANCE_HZ      CONFIG_BT_CALL_16k_ADVANCE_HZ
 
 //*********************************************************************************//
-//                                 升级配置                                        //
+//                                 Upgrade Configuration                                        //
 //*********************************************************************************//
 #if (defined(CONFIG_CPU_BR30))
-//升级LED显示使能
+// Enable LED display for firmware upgrade
 //#define UPDATE_LED_REMIND
-//升级提示音使能
+// Enable voice reminder for firmware upgrade
 //#define UPDATE_VOICE_REMIND
 #endif
 
 #if (defined(CONFIG_CPU_BR23) || defined(CONFIG_CPU_BR25))
-//升级IO保持使能
-//#define DEV_UPDATE_SUPPORT_JUMP           //目前只有br23\br25支持
+// Enable IO retention for firmware upgrade
+//#define DEV_UPDATE_SUPPORT_JUMP           // Currently only supported by br23/br25
 #endif
 
 #if (defined(CONFIG_CPU_BR23) || defined(CONFIG_CPU_BR25) || defined(CONFIG_CPU_BD29) || defined(CONFIG_CPU_BD19) || defined(CONFIG_CPU_BR30) || defined(CONFIG_CPU_BR34))
-#define USER_UART_UPDATE_ENABLE           0//用于客户开发上位机或者多MCU串口升级方案,请确保串口通信前已经退出powerdown,需要在对应的board添加初始化和唤醒口配置参考board_ac632n_demo.c
+#define USER_UART_UPDATE_ENABLE           0 // For customer's application development of host computer or multi-MCU serial upgrade solution, make sure to exit powerdown before starting serial communication. You need to add corresponding initialization and wake-up port configuration in the board (refer to board_ac632n_demo.c)
 
 #define UART_UPDATE_SLAVE	0
 #define UART_UPDATE_MASTER	1
 
-//配置串口升级IO
+// Configure serial upgrade IO
 #define UART_UPDATE_RX_PORT               IO_PORTA_02
 #define UART_UPDATE_TX_PORT               IO_PORTA_03
 
-//配置串口升级的角色
+// Configure the role for serial upgrade
 #define UART_UPDATE_ROLE	UART_UPDATE_SLAVE
 
 #if USER_UART_UPDATE_ENABLE
 #undef TCFG_CHARGESTORE_ENABLE
 #undef TCFG_TEST_BOX_ENABLE
-#define TCFG_CHARGESTORE_ENABLE				DISABLE_THIS_MOUDLE       //用户串口升级也使用了UART1
+#define TCFG_CHARGESTORE_ENABLE				DISABLE_THIS_MOUDLE       // User serial upgrade also uses UART1
 #endif
 
 #endif  //USER_UART_UPDATE_ENABLE
 
-#define FLOW_CONTROL           0  //AT 字符串口流控, 目前只有br30做了测试
+#define FLOW_CONTROL           0  // AT command serial port flow control, currently only tested on br30
 
 
 #endif

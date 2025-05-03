@@ -8,7 +8,7 @@
 #define CONFIG_SDFILE_ENABLE
 
 //*********************************************************************************//
-//                                 配置开始                                        //
+//                                 Configuration Start                             //
 //*********************************************************************************//
 #define ENABLE_THIS_MOUDLE					1
 #define DISABLE_THIS_MOUDLE					0
@@ -21,17 +21,17 @@
 //*********************************************************************************//
 //                                 UART配置                                        //
 //*********************************************************************************//
-#define TCFG_UART0_ENABLE					ENABLE_THIS_MOUDLE                     //串口打印模块使能
-#define TCFG_UART0_RX_PORT					NO_CONFIG_PORT                         //串口接收脚配置（用于打印可以选择NO_CONFIG_PORT）
-#define TCFG_UART0_TX_PORT  				IO_PORT_DP                            //串口发送脚配置
-#define TCFG_UART0_BAUDRATE  				1000000                                //串口波特率配置
+#define TCFG_UART0_ENABLE          ENABLE_THIS_MOUDLE     // Enable UART0 printing module
+#define TCFG_UART0_RX_PORT         NO_CONFIG_PORT         // UART0 RX pin configuration (for printing, you can choose NO_CONFIG_PORT)
+#define TCFG_UART0_TX_PORT         IO_PORT_DP             // UART0 TX pin configuration
+#define TCFG_UART0_BAUDRATE        1000000                // UART0 baudrate configuration
 
 //*********************************************************************************//
 //                                 USB 配置                                        //
 //*********************************************************************************//
-#define TCFG_PC_ENABLE						DISABLE_THIS_MOUDLE //PC模块使能
-#define TCFG_UDISK_ENABLE					DISABLE_THIS_MOUDLE //U盘模块使能
-#define TCFG_HID_HOST_ENABLE                DISABLE_THIS_MOUDLE//ENABLE_THIS_MOUDLE  //游戏盒子模式
+#define TCFG_PC_ENABLE                     DISABLE_THIS_MOUDLE // PC module enable
+#define TCFG_UDISK_ENABLE                  DISABLE_THIS_MOUDLE // USB disk module enable
+#define TCFG_HID_HOST_ENABLE               DISABLE_THIS_MOUDLE // Game box mode enable
 #define TCFG_ADB_ENABLE                     DISABLE_THIS_MOUDLE//ENABLE_THIS_MOUDLE
 #define TCFG_AOA_ENABLE                     DISABLE_THIS_MOUDLE//ENABLE_THIS_MOUDLE
 
@@ -74,7 +74,7 @@
 #define TCFG_HW_SPI2_ROLE		SPI_ROLE_MASTER
 
 //*********************************************************************************//
-//                                 FLASH 配置                                      //
+//                                 FLASH Configuration                                      //
 //*********************************************************************************//
 #define TCFG_CODE_FLASH_ENABLE				DISABLE_THIS_MOUDLE
 #define TCFG_FLASH_DEV_SPI_HW_NUM			1// 1: SPI1    2: SPI2
@@ -83,12 +83,12 @@
 
 
 //*********************************************************************************//
-//                                 key 配置                                        //
+//                                Key Configuration                                //
 //*********************************************************************************//
-#define KEY_NUM_MAX                        	10
-#define KEY_NUM                            	3
+#define KEY_NUM_MAX                         10
+#define KEY_NUM                             3
 
-#define MULT_KEY_ENABLE						DISABLE 		//是否使能组合按键消息, 使能后需要配置组合按键映射表
+#define MULT_KEY_ENABLE                     DISABLE     // Enable combined key messages; if enabled, configure the combined key mapping table
 //*********************************************************************************//
 //                                 iokey 配置                                      //
 //*********************************************************************************//
